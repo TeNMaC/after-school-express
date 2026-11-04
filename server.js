@@ -3,6 +3,7 @@ const express = require('express')
 const path = require('path')
 const lessonsRouter = require('./routes/lessons')
 const logger = require('./middleware/logger')
+const ordersRouter = require('./routes/orders')
 
 const app = express()
 const PORT = 3000
@@ -10,6 +11,7 @@ const PORT = 3000
 app.use(express.json())
 app.use(logger)
 app.use('/lessons',lessonsRouter)
+app.use('/orders', ordersRouter)
 
 app.use('/images', express.static(path.join(__dirname, 'public/images')))
 

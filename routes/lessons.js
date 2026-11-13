@@ -11,7 +11,17 @@ router.get('/', async (req, res) => {
       .sort({ id: 1 })
       .toArray()
 
-    res.json(lessons)
+  const search = String(req.query.q ?? '').trim().toLowerCase()
+
+const results = lessons.filter(lesson =>
+  [lesson.topic, lesson.location, lesson.price, lesson.space]
+    .some(value =>
+      String(value).toLowerCase().includes(search)
+    )
+)
+
+res.json(results)
+
   } catch (error) {
     console.error('Failed to retrieve lessons:', error.message)
     res.status(500).json({ error: 'Failed to retrieve lessons' })
